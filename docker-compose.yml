@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  traefik:
+    image: traefik:v2.10
+    container_name: traefik
+    restart: always
+    command:
+      - "--api.dashboard=true"                    # Habilita la UI de Traefik
+      - "--providers.docker=true"                 # Habilita la detección automática de contenedores Docker
+      - "--providers.docker.exposedbydefault=false" # Evita exponer contenedores por defecto
+      - "--entrypoints.web.address=:80"           # Define el puerto 80 como punto de entrada
+    ports:
+      - "80:80"    # Expone el puerto HTTP
+      - "8080:8080" # Interfaz web de Traefik
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock" # Permite a Traefik comunicarse con Docker
+    
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true  # Usa la red creada manualmente
