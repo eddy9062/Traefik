@@ -7,6 +7,7 @@ services:
     restart: always
     command:
       - "--api.dashboard=true"                    # Habilita la UI de Traefik
+      - "--api.insecure=true"
       - "--providers.docker=true"                 # Habilita la detección automática de contenedores Docker
       - "--providers.docker.exposedbydefault=false" # Evita exponer contenedores por defecto
       - "--entrypoints.web.address=:80"           # Define el puerto 80 como punto de entrada
