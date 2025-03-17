@@ -6,7 +6,7 @@ services:
     container_name: traefik
     restart: always
     command:
-      - "--api.dashboard=true"                    # Habilita la UI de Traefik
+      - "--api.dashboard=false"                    # Habilita la UI de Traefik
       - "--api.insecure=true"
       - "--providers.docker=true"                 # Habilita la detección automática de contenedores Docker
       - "--providers.docker.exposedbydefault=false" # Evita exponer contenedores por defecto
