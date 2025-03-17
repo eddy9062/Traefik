@@ -5,6 +5,8 @@ services:
     image: traefik:v2.10
     container_name: traefik
     restart: always
+    environment:
+      - TZ=America/Guatemala
     command:
       - "--api.dashboard=false"                    # Habilita la UI de Traefik
       - "--api.insecure=true"
@@ -21,6 +23,8 @@ services:
       - 8080:8080 # Interfaz web de Traefik
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock" # Permite a Traefik comunicarse con Docker
+      - /root/docker/volumes/traefik/letsencrypt:/letsencrypt/
+      - /root/docker/logs/traefik/:/traefik/logs/
     labels:  
       - "traefik.enable=true"
        # Redireccionamiento de HTTP a HTTPS
