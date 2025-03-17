@@ -11,12 +11,20 @@ services:
       - "--providers.docker=true"                 # Habilita la detección automática de contenedores Docker
       - "--providers.docker.exposedbydefault=false" # Evita exponer contenedores por defecto
       - "--entrypoints.web.address=:80"           # Define el puerto 80 como punto de entrada
+      - "--entrypoints.websecure.address=:443" # new
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true" # new
+      - "--certificatesresolvers.myresolver.acme.email=eddy9062@gmail.com" # new
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json" # new
     ports:
-      - "80:80"    # Expone el puerto HTTP
-      - "8080:8080" # Interfaz web de Traefik
+      - 80:80    # Expone el puerto HTTP
+      - 443:443
+      - 8080:8080 # Interfaz web de Traefik
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock" # Permite a Traefik comunicarse con Docker
-    
+    labels:  
+      - "traefik.enable=true"
+       # Redireccionamiento de HTTP a HTTPS
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
     networks:
       - proxy
 
